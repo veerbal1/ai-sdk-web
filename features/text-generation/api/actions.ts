@@ -4,8 +4,6 @@ import { openai } from "@ai-sdk/openai";
 import { generateText } from "ai";
 import { getPageMetadata } from "@/shared/lib/metadata";
 
-export const maxDuration = 60;
-
 export async function generateTextResponse(prompt: string) {
   if (!prompt) {
     throw new Error("Prompt is required");
