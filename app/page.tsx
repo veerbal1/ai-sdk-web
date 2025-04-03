@@ -1,12 +1,9 @@
-import { Button } from "@/shared/components/ui/button";
-import Image from "next/image";
+import { TextGeneratorForm } from "@/features/text-generation/components/TextGeneratorForm";
 
 export default function Home() {
   return (
-    <div>
-      <Button className="cursor-pointer">
-        This is a button
-      </Button>
+    <div className="container mx-auto p-4 max-w-4xl">
+      <TextGeneratorForm />
     </div>
   );
 }
