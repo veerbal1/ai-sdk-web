@@ -8,6 +8,7 @@ import { Markdown } from "@/shared/components/ui/markdown";
 import { Loader2 } from "lucide-react";
 import { generateTextResponse } from "../api/actions";
 import { TextGenerationResponse } from "../types";
+import { SourceCard } from "./SourceCard";
 
 export function TextGeneratorForm() {
   const [prompt, setPrompt] = useState('');
@@ -83,21 +84,12 @@ export function TextGeneratorForm() {
             
             {response.sources && response.sources.length > 0 && (
               <div className="mt-6">
-                <h3 className="text-lg font-semibold mb-2">Sources</h3>
-                <ul className="space-y-2">
+                <h3 className="text-lg font-semibold mb-4">Sources</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {response.sources.map((source, index) => (
-                    <li key={index}>
-                      <a 
-                        href={source.url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-blue-500 hover:underline"
-                      >
-                        {source.title || source.url}
-                      </a>
-                    </li>
+                    <SourceCard key={index} source={source} />
                   ))}
-                </ul>
+                </div>
               </div>
             )}
           </CardContent>

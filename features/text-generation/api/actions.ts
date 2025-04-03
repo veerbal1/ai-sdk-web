@@ -2,6 +2,7 @@
 
 import { openai } from "@ai-sdk/openai";
 import { generateText } from "ai";
+import { getPageMetadata } from "@/shared/lib/metadata";
 
 export async function generateTextResponse(prompt: string) {
   if (!prompt) {
@@ -17,7 +18,19 @@ export async function generateTextResponse(prompt: string) {
       },
     });
 
-    return { text, sources };
+    // Fetch metadata for each source
+    const sourcesWithMetadata = await Promise.all(
+      sources.map(async (source) => {
+        const metadata = await getPageMetadata(source.url);
+        return {
+          ...source,
+          title: source.title || metadata?.title || source.url,
+          image: metadata?.image,
+        };
+      })
+    );
+
+    return { text, sources: sourcesWithMetadata };
   } catch (error) {
     console.error("Error generating text:", error);
     throw new Error("Failed to generate text");
