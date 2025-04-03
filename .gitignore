@@ -40,4 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .cursorrules
-.cursor-architecture-rules
+.cursor/rules/cursor-architecture-rules.mdc
+.cursor-directory
