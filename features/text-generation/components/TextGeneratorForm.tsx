@@ -6,7 +6,6 @@ import { Input } from "@/shared/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/components/ui/card";
 import { Markdown } from "@/shared/components/ui/markdown";
 import { Loader2 } from "lucide-react";
-import { generateTextResponse } from "../api/actions";
 import { TextGenerationResponse } from "../types";
 import { SourceCard } from "./SourceCard";
 
@@ -23,7 +22,20 @@ export function TextGeneratorForm() {
     setResponse(null);
 
     try {
-      const data = await generateTextResponse(prompt);
+      const res = await fetch('/api/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'Failed to generate response');
+      }
+
+      const data = await res.json();
       setResponse(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
@@ -36,7 +48,7 @@ export function TextGeneratorForm() {
     <div className="space-y-8">
       <Card>
         <CardHeader>
-          <CardTitle>AI Text Generator</CardTitle>
+          <CardTitle>Demo - Web Search Agent</CardTitle>
           <CardDescription>
             Ask any question and get real-time information with sources
           </CardDescription>
