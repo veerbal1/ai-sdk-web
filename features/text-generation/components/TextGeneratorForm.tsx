@@ -56,7 +56,7 @@ export function TextGeneratorForm() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center">
               <Input
                 placeholder="What happened in New York yesterday?"
                 value={prompt}
