@@ -8,6 +8,7 @@ import { Markdown } from "@/shared/components/ui/markdown";
 import { Loader2 } from "lucide-react";
 import { TextGenerationResponse } from "../types";
 import { SourceCard } from "./SourceCard";
+import { ScrollArea, ScrollBar } from "@/shared/components/ui/scroll-area";
 
 export function TextGeneratorForm() {
   const [prompt, setPrompt] = useState('');
@@ -91,19 +92,23 @@ export function TextGeneratorForm() {
           <CardHeader>
             <CardTitle>Response</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <Markdown content={response.text} />
-            
+          <CardContent className="space-y-4 p-0">
             {response.sources && response.sources.length > 0 && (
-              <div className="mt-6">
-                <h3 className="text-lg font-semibold mb-4">Sources</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {response.sources.map((source, index) => (
-                    <SourceCard key={index} source={source} />
-                  ))}
-                </div>
+              <div className="mb-6">
+                <h3 className="text-lg font-semibold mb-4 px-6">Sources</h3>
+                <ScrollArea className="whitespace-nowrap px-6 pb-10" >
+                  <div className="flex gap-4">
+                    {response.sources.map((source, index) => (
+                      <SourceCard key={index} source={source} />
+                    ))}
+                  </div>
+                  <ScrollBar orientation="horizontal" />
+                </ScrollArea>
               </div>
             )}
+            <div className="px-6">
+              <Markdown content={response.text} />
+            </div>
           </CardContent>
         </Card>
       )}

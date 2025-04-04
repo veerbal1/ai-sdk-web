@@ -11,9 +11,9 @@ interface SourceCardProps {
 
 export function SourceCard({ source }: SourceCardProps) {
   return (
-    <Card className="overflow-hidden">
-      {source.image && (
-        <div className="relative h-48 w-full">
+    <Card className="overflow-hidden w-48 flex-shrink-0 pt-0">
+      {source.image ? (
+        <div className="relative h-24 w-full">
           <Image
             src={source.image}
             alt={source.title || source.url}
@@ -22,9 +22,14 @@ export function SourceCard({ source }: SourceCardProps) {
             unoptimized
           />
         </div>
+      ) : (
+        <div className="h-24 w-full bg-gray-200 flex items-center justify-center text-gray-500">
+          {/* Placeholder for missing image */}
+          <span>No Image</span> {/* Or an icon component */}
+        </div>
       )}
-      <CardHeader>
-        <h3 className="text-lg font-semibold line-clamp-2">
+      <CardHeader className="p-4 pt-2">
+        <h3 className="text-lg font-semibold line-clamp-2 overflow-hidden">
           {source.title || source.url}
         </h3>
       </CardHeader>
