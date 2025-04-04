@@ -12,7 +12,7 @@ export function SiteHeader() {
           className="mx-2 data-[orientation=vertical]:h-4"
         />
         <h1 className="text-base font-medium">Veerbal's AI SDK Projects</h1>
-        <div className="ml-auto flex items-center gap-2 hidden">
+        <div className="ml-auto items-center gap-2 hidden">
           <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
             <a
               href="https://github.com/shadcn-ui/ui/tree/main/apps/v4/app/(examples)/dashboard"
