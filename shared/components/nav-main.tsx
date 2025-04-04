@@ -1,9 +1,9 @@
 "use client"
 
-import { 
+import {
   // IconCirclePlusFilled, 
   // IconMail, 
-  type Icon 
+  type Icon
 } from "@tabler/icons-react"
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -36,16 +36,16 @@ export function NavMain({
             const isActive = pathname === item.url;
             return (
               <SidebarMenuItem key={item.title}>
-                <Link href={item.url} passHref legacyBehavior>
-                  <SidebarMenuButton 
-                    tooltip={item.title} 
-                    asChild 
+                <Link href={item.url} passHref>
+                  <SidebarMenuButton
+                    tooltip={item.title}
+                    asChild
                     data-active={isActive}
                   >
-                    <a>
+                    <span>
                       {item.icon && <item.icon />}
                       <span>{item.title}</span>
-                    </a>
+                    </span>
                   </SidebarMenuButton>
                 </Link>
               </SidebarMenuItem>

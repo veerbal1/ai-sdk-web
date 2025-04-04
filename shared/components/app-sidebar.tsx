@@ -23,6 +23,11 @@ const mainNavItems = [
     url: "/web-search-agent",
     icon: IconFileAi,
   },
+  {
+    title: 'Test',
+    url: '/test',
+    icon: IconFileAi,
+  }
 ]
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
