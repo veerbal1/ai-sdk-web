@@ -16,18 +16,18 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Demo - Web Search Agent",
+  title: "Veerbal's AI SDK Projects",
   description: "Generate real-time information with sources using AI",
   keywords: ["AI", "text generation", "real-time information", "sources"],
   authors: [{ name: "Veerbal" }],
   openGraph: {
-    title: "Demo - Web Search Agent",
+    title: "Veerbal's AI SDK Projects",
     description: "Generate real-time information with sources using AI",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Demo - Web Search Agent",
+    title: "Veerbal's AI SDK Projects",
     description: "Generate real-time information with sources using AI",
   },
 };
@@ -55,7 +55,7 @@ export default function RootLayout({
             <SiteHeader />
             <div className="flex flex-1 flex-col">
               <div className="@container/main flex flex-1 flex-col gap-2">
-                <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+                <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6 px-6">
                   {children}
                 </div>
               </div>
