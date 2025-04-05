@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     }
 
     const { text, finishReason, usage } = await generateText({
-      model: openai('gpt-4o'), // Or your preferred model
+      model: openai('gpt-4o-mini'), // Or your preferred model
       system: 'You are a helpful assistant.',
       prompt: prompt,
     });

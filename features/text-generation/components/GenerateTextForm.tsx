@@ -5,9 +5,10 @@ import { Button } from '@/shared/components/ui/button';
 import { Textarea } from '@/shared/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/shared/components/ui/card';
 import { Label } from '@/shared/components/ui/label';
+import { Markdown } from '@/shared/components/ui/markdown';
 
 export const GenerateTextForm = () => {
-  const [prompt, setPrompt] = useState('Why is the sky blue?');
+  const [prompt, setPrompt] = useState('Why sun is hot?');
   const [generation, setGeneration] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -64,7 +65,7 @@ export const GenerateTextForm = () => {
         {generation && (
           <div className="mt-4 p-4 border rounded-md bg-secondary/50">
             <h4 className="font-semibold mb-2 text-sm">Generated Text:</h4>
-            <p className="text-sm text-muted-foreground whitespace-pre-wrap">{generation}</p>
+            <Markdown content={generation} />
           </div>
         )}
       </CardContent>
