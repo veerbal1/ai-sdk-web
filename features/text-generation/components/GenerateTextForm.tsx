@@ -8,7 +8,7 @@ import { Label } from '@/shared/components/ui/label';
 import { Markdown } from '@/shared/components/ui/markdown';
 
 export const GenerateTextForm = () => {
-  const [prompt, setPrompt] = useState('Why sun is hot?');
+  const [prompt, setPrompt] = useState('Why is the sun hot?');
   const [generation, setGeneration] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
