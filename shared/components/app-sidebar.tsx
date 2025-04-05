@@ -28,6 +28,11 @@ const mainNavItems = [
     title: 'Generate Text',
     url: '/generate-text',
     icon: IconFileAi,
+  },
+  {
+    title: 'Image Generation (Chat)',
+    url: '/generate-image-chat',
+    icon: IconFileAi,
   }
 ]
 
