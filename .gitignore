@@ -42,3 +42,4 @@ next-env.d.ts
 .cursorrules
 .cursor/rules/cursor-architecture-rules.mdc
 .cursor-directory
+.cursor/rules/cursor-directory.mdc
