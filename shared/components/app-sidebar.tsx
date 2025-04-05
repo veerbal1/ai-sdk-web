@@ -24,8 +24,8 @@ const mainNavItems = [
     icon: IconFileAi,
   },
   {
-    title: 'Test',
-    url: '/test',
+    title: 'Generate Text',
+    url: '/generate-text',
     icon: IconFileAi,
   }
 ]
