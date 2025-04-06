@@ -1,12 +1,10 @@
 "use client"
 
 import * as React from "react"
-import {
-  IconFileAi,
-} from "@tabler/icons-react"
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar"
 import { Twitter } from 'lucide-react'; // Assuming lucide-react for X icon
+import { mainNavItems } from "@/shared/config/nav"; // Import from config
 
 import { NavMain } from "@/shared/components/nav-main"
 import {
@@ -17,24 +15,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/shared/components/ui/sidebar"
-
-const mainNavItems = [
-  {
-    title: "Web Search Agent",
-    url: "/web-search-agent",
-    icon: IconFileAi,
-  },
-  {
-    title: 'Generate Text',
-    url: '/generate-text',
-    icon: IconFileAi,
-  },
-  {
-    title: 'Image Generation (Chat)',
-    url: '/generate-image-chat',
-    icon: IconFileAi,
-  }
-]
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const twitterHandle = 'veerbal01';
