@@ -1,35 +1,48 @@
-import { type NextRequest, NextResponse } from 'next/server';
+import { openai } from '@ai-sdk/openai';
+import { createDataStreamResponse, streamText, tool } from 'ai';
+import { z } from 'zod';
 
-// Basic API route structure
-export async function POST(request: NextRequest) {
-  try {
-    // Placeholder: In a real scenario, you would:
-    // 1. Parse the request body if needed.
-    // 2. Authenticate the user (if required).
-    // 3. Call the AI model/service to initiate the multi-step stream.
-    // 4. Use a ReadableStream or AI SDK stream response to send data back.
+export async function POST(req: Request) {
+  const { messages } = await req.json();
 
-    console.log('API route /api/stream-text-multistep called');
+  return createDataStreamResponse({
+    execute: async dataStream => {
+      // step 1 example: forced tool call
+      const result1 = streamText({
+        model: openai('gpt-4o-mini', { structuredOutputs: true }),
+        system: 'Extract the user goal from the conversation.',
+        messages,
+        toolChoice: 'required', // force the model to call a tool
+        tools: {
+          extractGoal: tool({
+            parameters: z.object({ goal: z.string() }),
+            execute: async ({ goal }) => goal, // no-op extract tool
+          }),
+        },
+      });
 
-    // Simulate a simple response for now
-    return NextResponse.json({ message: 'API endpoint reached successfully. Streaming logic not yet implemented.' });
+      // forward the initial result to the client without the finish event:
+      result1.mergeIntoDataStream(dataStream, {
+        experimental_sendFinish: false, // omit the finish event
+      });
 
-    // Example of how streaming might start (using AI SDK, conceptual):
-    // const stream = createStreamableValue('');
-    // (async () => {
-    //   await runMultiStepProcess(stream.update);
-    //   stream.done();
-    // })();
-    // return new StreamingTextResponse(stream.value);
+      // note: you can use any programming construct here, e.g. if-else, loops, etc.
+      // workflow programming is normal programming with this approach.
 
-  } catch (error) {
-    console.error('[STREAM_MULTISTEP_API_ERROR]', error);
-    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-    return NextResponse.json({ error: `Failed to process request: ${errorMessage}` }, { status: 500 });
-  }
-}
+      // example: continue stream with forced tool call from previous step
+      const result2 = streamText({
+        // different system prompt, different model, no tools:
+        model: openai('gpt-4o'),
+        system:
+          'You are a helpful assistant with a different system prompt. Repeat the extract user goal in your answer.',
+        // continue the workflow stream with the messages from the previous step:
+        messages: [...messages, ...(await result1.response).messages],
+      });
 
-// Ensure GET or other methods are handled if necessary, or return Method Not Allowed
-export async function GET(request: NextRequest) {
-  return NextResponse.json({ error: 'Method Not Allowed' }, { status: 405 });
+      // forward the 2nd result to the client (incl. the finish event):
+      result2.mergeIntoDataStream(dataStream, {
+        experimental_sendStart: false, // omit the start event
+      });
+    },
+  });
 }
