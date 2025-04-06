@@ -24,9 +24,9 @@ export const mainNavItems: NavItem[] = [
     url: '/generate-image-chat',
     icon: IconFileAi,
   },
-  {
-    title: 'Stream Text Multi-Step',
-    url: '/stream-text-multistep',
-    icon: IconFileAi,
-  }
+  // {
+  //   title: 'Stream Text Multi-Step',
+  //   url: '/stream-text-multistep',
+  //   icon: IconFileAi,
+  // }
 ]; 
