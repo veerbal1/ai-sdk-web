@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { marked } from 'marked';
 
 interface MarkdownProps {
@@ -7,11 +8,13 @@ interface MarkdownProps {
   className?: string;
 }
 
-export function Markdown({ content, className = '' }: MarkdownProps) {
+const MarkdownComponent = ({ content, className = '' }: MarkdownProps) => {
   return (
     <div 
-      className={`prose max-w-none ${className}`}
+      className={`prose dark:prose-invert max-w-none ${className}`}
       dangerouslySetInnerHTML={{ __html: marked(content) }}
     />
   );
-} 
+};
+
+export const Markdown = React.memo(MarkdownComponent); 

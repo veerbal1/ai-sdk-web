@@ -29,6 +29,11 @@ export const mainNavItems: NavItem[] = [
     url: '/stream-object-demo',
     icon: IconFileAi,
   },
+  {
+    title: 'Groq Chat (llama-4-scout)',
+    url: '/groq-chat',
+    icon: IconFileAi,
+  },
   // {
   //   title: 'Stream Text Multi-Step',
   //   url: '/stream-text-multistep',
