@@ -6,6 +6,9 @@ import { Input } from '@/shared/components/ui/input';
 import { ScrollArea } from '@/shared/components/ui/scroll-area';
 import { useRef } from 'react';
 import { Markdown } from '@/shared/components/ui/markdown';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/components/ui/card';
+import { Avatar } from '@/shared/components/ui/avatar';
+import { Send } from 'lucide-react';
 
 /**
  * Renders a chat interface demonstrating caching, with auto-scrolling.
@@ -33,48 +36,67 @@ export function ChatInterface() {
   // }, [messages]);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-150px)] max-h-[700px] w-full max-w-2xl mx-auto">
-      <ScrollArea className="flex-grow p-4 border rounded-md mb-4 h-36" ref={scrollAreaRef}>
-        <div className="flex flex-col gap-4 pr-2"> {/* Added slight padding-right for scrollbar */}
-          {messages.length === 0 && (
-            <p className="text-center text-muted-foreground">
-              No messages yet. Start the conversation!
-            </p>
-          )}
-          {messages.map(m => (
-            <div
-              key={m.id}
-              className={`p-3 rounded-lg shadow-sm w-fit max-w-[85%] ${m.role === 'user'
-                ? 'bg-primary/10 self-end'
-                : 'bg-muted self-start'
-                }`}
-            >
-              <span className="font-semibold capitalize mr-2">
-                {m.role === 'user' ? 'You' : 'AI'}:
-              </span>
-              {/* Use break-words to prevent overflow with long words */}
-              {/* <Markdown content={m.content} /> */}
-              <span className="whitespace-pre-wrap break-words">{m.content}</span>
-            </div>
-          ))}
-          {/* Empty div at the end to scroll to */}
-          <div ref={messagesEndRef} />
-        </div>
-      </ScrollArea>
+    <div className="flex flex-col min-h-screen p-4 md:p-8 max-w-4xl mx-auto">
+      <Card className="w-full mb-6">
+        <CardHeader>
+          <CardTitle className="text-2xl">Chat Caching Demo</CardTitle>
+          <CardDescription className="text-sm text-muted-foreground">
+            Interact with the AI. Responses will be cached locally in .cache/ai-cache.json. Clear this file for fresh
+            responses.
+          </CardDescription>
+          <div className="mt-2 p-2 bg-amber-50 border border-amber-200 rounded-md text-amber-800 text-xs">
+            <strong>Note:</strong> This caching is for development/testing only.
+          </div>
+        </CardHeader>
+      </Card>
 
-      <form onSubmit={handleSubmit} className="flex items-center gap-2">
-        <Input
-          name="prompt"
-          value={input}
-          onChange={handleInputChange}
-          placeholder="Type your message..."
-          disabled={isLoading}
-          className="flex-grow"
-        />
-        <Button type="submit" disabled={isLoading || !input.trim()}>
-          {isLoading ? 'Sending...' : 'Send'}
-        </Button>
-      </form>
+      <Card className="flex-1 flex flex-col">
+        <CardContent className="flex-1 flex flex-col p-4 h-[60vh]">
+          <ScrollArea className="flex-1 pr-4">
+            {messages.length === 0 ? (
+              <div className="h-full flex items-center justify-center text-muted-foreground">
+                Start a conversation by typing a message below.
+              </div>
+            ) : (
+              <div className="space-y-4 pt-4">
+                {messages.map((message) => (
+                  <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
+                    <div
+                      className={`flex items-start gap-3 max-w-[80%] ${message.role === "user" ? "flex-row-reverse" : ""
+                        }`}
+                    >
+                      <Avatar className={message.role === "user" ? "bg-primary" : "bg-muted"}>
+                        <div className="text-xs">{message.role === "user" ? "You" : "AI"}</div>
+                      </Avatar>
+                      <div
+                        className={`rounded-lg px-4 py-2 ${message.role === "user" ? "bg-background text-primary" : "bg-muted"
+                          }`}
+                      >
+                        <Markdown content={message.content} />
+                        {/* {message.content} */}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </ScrollArea>
+
+          <form onSubmit={handleSubmit} className="mt-4 flex gap-2">
+            <Input
+              value={input}
+              onChange={handleInputChange}
+              placeholder="Type your message..."
+              className="flex-1"
+              disabled={isLoading}
+            />
+            <Button type="submit" disabled={isLoading || !input.trim()}>
+              <Send className="h-4 w-4" />
+              <span className="sr-only">Send</span>
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 } 
