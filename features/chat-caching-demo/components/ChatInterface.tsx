@@ -11,7 +11,7 @@ import { ScrollArea } from '@/shared/components/ui/scroll-area';
 export function ChatInterface() {
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useChat({
-      // The API endpoint created earlier is used by default
+      api: '/api/chat-cached'
     });
 
   return (
