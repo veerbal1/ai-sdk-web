@@ -43,3 +43,6 @@ next-env.d.ts
 .cursor/rules/cursor-architecture-rules.mdc
 .cursor-directory
 .cursor/rules/cursor-directory.mdc
+
+# cache
+.cache/

@@ -1,4 +1,4 @@
-import { IconFileAi, type Icon } from '@tabler/icons-react'; // Import Icon type
+import { IconFileAi, IconMessageChatbot, type Icon } from '@tabler/icons-react'; // Import Icon type
 
 export interface NavItem {
   title: string;
@@ -9,6 +9,11 @@ export interface NavItem {
 }
 
 export const mainNavItems: NavItem[] = [
+  {
+    title: 'Chat Caching (Dev)',
+    url: '/chat-caching-demo',
+    icon: IconMessageChatbot,
+  },
   {
     title: "Web Search Agent",
     url: "/web-search-agent",
