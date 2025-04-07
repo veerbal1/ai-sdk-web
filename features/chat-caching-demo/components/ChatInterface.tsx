@@ -41,7 +41,7 @@ export function ChatInterface() {
         <CardHeader>
           <CardTitle className="text-2xl">Chat Caching Demo</CardTitle>
           <CardDescription className="text-sm text-muted-foreground">
-            Interact with the AI. Responses will be cached locally in .cache/ai-cache.json. Clear this file for fresh
+            Interact with the AI. Responses will be cached locally in <code className='bg-primary/10 rounded'>.cache/ai-cache.json</code>. Clear this file for fresh
             responses.
           </CardDescription>
           <div className="mt-2 p-2 bg-amber-50 border border-amber-200 rounded-md text-amber-800 text-xs">
