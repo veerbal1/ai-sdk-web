@@ -6,7 +6,6 @@ Date: ${new Date()}
 
 ## Personal Information
 - **Name:** Veerbal Singh
-- **Nationality:** Indian
 - **Contact:** veerbal.singh369@gmail.com
 - **Website:** https://veerbal.vercel.app/
 - **Social/Professional Profiles:** LinkedIn, Twitter, GitHub
