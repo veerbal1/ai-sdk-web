@@ -30,6 +30,11 @@ export const mainNavItems: NavItem[] = [
     icon: IconFileAi,
   },
   {
+    title: 'LLM Tool Calling',
+    url: '/llm-tool-calling',
+    icon: IconFileAi,
+  },
+  {
     title: 'Groq Chat (llama-4-scout)',
     url: '/groq-chat',
     icon: IconFileAi,
