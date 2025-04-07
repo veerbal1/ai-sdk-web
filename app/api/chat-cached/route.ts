@@ -1,6 +1,6 @@
-import { openai } from '@ai-sdk/openai';
-import { streamText } from 'ai';
-import { cached } from '@/lib/middleware'; // Import the cached middleware
+import { openai } from "@ai-sdk/openai";
+import { streamText } from "ai";
+import { cached } from "@/lib/middleware"; // Import the cached middleware
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -10,11 +10,14 @@ export async function POST(req: Request) {
     const { messages } = await req.json();
 
     // Wrap the OpenAI model with the cached middleware
-    const model = cached(openai('gpt-4o-mini'));
+    const model =
+      process.env.NODE_ENV === "development"
+        ? cached(openai("gpt-4o-mini"))
+        : openai("gpt-4o-mini");
 
     const result = await streamText({
-      model: model, // Use the cached model
-      system: 'You are a helpful assistant.',
+      model: model, // Use the cached model in dev otherwise prod model
+      system: "You are a helpful assistant.",
       messages,
     });
 
@@ -23,9 +26,9 @@ export async function POST(req: Request) {
   } catch (error) {
     // Handle potential errors, e.g., invalid request body
     if (error instanceof SyntaxError) {
-      return new Response('Invalid JSON', { status: 400 });
+      return new Response("Invalid JSON", { status: 400 });
     }
-    console.error('Error in chat API:', error);
-    return new Response('Internal Server Error', { status: 500 });
+    console.error("Error in chat API:", error);
+    return new Response("Internal Server Error", { status: 500 });
   }
-} 
+}
