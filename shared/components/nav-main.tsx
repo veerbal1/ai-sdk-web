@@ -16,6 +16,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/shared/components/ui/sidebar"
+import LoadingIndicator from "./link-loading-indicator";
 
 export function NavMain({
   items,
@@ -36,16 +37,25 @@ export function NavMain({
             const isActive = pathname === item.url;
             return (
               <SidebarMenuItem key={item.title}>
-                <Link href={item.url} passHref>
+                <Link href={item.url} passHref onNavigate={() => {        // Only executes during SPA navigation
+                  console.log('Navigating...')
+
+                  // Optionally prevent navigation
+                  // e.preventDefault()
+                }}>
                   <SidebarMenuButton
                     tooltip={item.title}
                     asChild
                     data-active={isActive}
                   >
-                    <span>
-                      {item.icon && <item.icon />}
-                      <span>{item.title}</span>
-                    </span>
+                    <div className="flex items-center gap-2 justify-between">
+                      <span className="flex items-center gap-2">
+                        {item.icon && <item.icon />}
+                        <span>{item.title}</span>
+                      </span>
+                      <LoadingIndicator />
+                    </div>
+
                   </SidebarMenuButton>
                 </Link>
               </SidebarMenuItem>
