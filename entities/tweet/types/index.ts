@@ -12,3 +12,13 @@ export interface Tweet {
   // likes?: number;
   // retweets?: number;
 } 
+
+/**
+ * Represents a source returned by the AI SDK web search tool.
+ */
+export interface Source {
+  id: string;
+  sourceType: string; // e.g., "web"
+  title: string;
+  url: string;
+} 

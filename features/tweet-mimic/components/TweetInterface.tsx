@@ -5,8 +5,8 @@ import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Separator } from "@/shared/components/ui/separator";
 import { VerifiedBadge } from '@/shared/components/ui/verified-badge';
-import { Tweet } from '@/entities/tweet/types';
-import { SendIcon, Loader2 } from "lucide-react";
+import { Tweet, Source } from '@/entities/tweet/types';
+import { SendIcon, Loader2, LinkIcon } from "lucide-react";
 import React, { useState } from "react";
 import trumpImage from "../assets/images/trump.jpg";
 import elonImage from "../assets/images/elon.jpg";
@@ -51,6 +51,7 @@ const usersMetaData = {
 export const TweetInterface = () => {
     const [inputValue, setInputValue] = useState<string>("");
     const [tweets, setTweets] = useState<Tweet[]>([]);
+    const [sources, setSources] = useState<Source[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -58,6 +59,8 @@ export const TweetInterface = () => {
         if (!inputValue.trim() || isLoading) return;
 
         setIsLoading(true);
+        setTweets([]);
+        setSources([]);
         try {
             const response = await fetch("/api/tweet-mimic", {
                 method: "POST",
@@ -66,21 +69,22 @@ export const TweetInterface = () => {
 
             if (!response.ok) {
                 console.error("API request failed:", response.statusText);
-                setTweets([{
-                    id: 'error-' + Date.now(),
-                    name: 'System',
-                    handle: 'error',
-                    avatarUrl: '',
-                    content: `Failed to generate tweets. Status: ${response.status}`,
-                }, ...tweets]);
+                setTweets([
+                    {
+                        id: 'error-' + Date.now(),
+                        name: 'System',
+                        handle: 'error',
+                        avatarUrl: '',
+                        content: `Failed to generate tweets. Status: ${response.status}`,
+                    }
+                ]);
                 return;
             }
 
             const responseData = await response.json();
             const data = responseData.tweets;
-            const sources = responseData.sources;
-            console.log("data", data);
-            console.log("sources", sources);
+            const fetchedSources: Source[] = responseData.sources || [];
+
             const newTweetsData = Object.keys(data).map((key) => {
                 const metaDataKey = key as keyof typeof usersMetaData;
                 const meta = usersMetaData[metaDataKey];
@@ -99,16 +103,19 @@ export const TweetInterface = () => {
             }).filter((item): item is Tweet => item !== null);
 
             setTweets(newTweetsData);
+            setSources(fetchedSources);
             setInputValue("");
         } catch (error) {
             console.error("Error during tweet generation:", error);
-            setTweets([{
-                id: 'error-' + Date.now(),
-                name: 'System',
-                handle: 'error',
-                avatarUrl: '',
-                content: `An error occurred: ${error instanceof Error ? error.message : 'Unknown error'}`,
-            }, ...tweets]);
+            setTweets([
+                {
+                    id: 'error-' + Date.now(),
+                    name: 'System',
+                    handle: 'error',
+                    avatarUrl: '',
+                    content: `An error occurred: ${error instanceof Error ? error.message : 'Unknown error'}`,
+                }
+            ]);
         } finally {
             setIsLoading(false);
         }
@@ -145,35 +152,55 @@ export const TweetInterface = () => {
 
             <Separator />
 
+            {/* Sources Section */}
+            {sources && sources.length > 0 && (
+                <div className="mt-6 p-4 border border-border rounded-lg bg-card">
+                    <h3 className="text-lg font-semibold mb-3 text-card-foreground">Sources Found:</h3>
+                    <ul className="space-y-2">
+                        {sources.map((source) => (
+                            <li key={source.id || source.url} className="text-sm">
+                                <a
+                                    href={source.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center text-blue-500 hover:text-blue-700 hover:underline transition-colors"
+                                >
+                                    <LinkIcon className="w-4 h-4 mr-2 flex-shrink-0" />
+                                    <span className="truncate">{source.title || source.url}</span>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+
             {/* Tweet List - Changed to Grid Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> {/* Updated class for grid layout */}
-                {/* Render tweets from state */}
-                {tweets.map((tweet) => (
-                    <div
-                        key={tweet.id}
-                        className="flex space-x-3 p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors duration-150 bg-card" // Added bg-card for consistency
-                    >
-                        {/* Tweet Author Avatar */}
-                        <Avatar>
-                            <AvatarImage src={tweet.avatarUrl} alt={tweet.name} />
-                            <AvatarFallback>{tweet.name.substring(0, 2).toUpperCase()}</AvatarFallback> {/* Fallback with initials */}
-                        </Avatar>
-                        {/* Tweet Content Area */}
-                        <div className="flex-1">
-                            <div className="flex items-center space-x-1">
-                                <span className="font-semibold text-card-foreground hover:underline cursor-pointer">{tweet.name}</span>
-                                <VerifiedBadge /> {/* Added verified badge */}
-                                <span className="text-sm text-muted-foreground">@{tweet.handle}</span>
-                                {/* Optional: Add timestamp */}
-                                {/* <span className="text-sm text-muted-foreground">· 1h</span> */}
+            {tweets.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                    {tweets.map((tweet) => (
+                        <div
+                            key={tweet.id}
+                            className="flex space-x-3 p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors duration-150 bg-card"
+                        >
+                            {/* Tweet Author Avatar */}
+                            <Avatar>
+                                <AvatarImage src={tweet.avatarUrl} alt={tweet.name} />
+                                <AvatarFallback>{tweet.name.substring(0, 2).toUpperCase()}</AvatarFallback>
+                            </Avatar>
+                            {/* Tweet Content Area */}
+                            <div className="flex-1">
+                                <div className="flex items-center space-x-1">
+                                    <span className="font-semibold text-card-foreground hover:underline cursor-pointer">{tweet.name}</span>
+                                    <VerifiedBadge />
+                                    <span className="text-sm text-muted-foreground">@{tweet.handle}</span>
+                                </div>
+                                {/* Tweet Text */}
+                                <p className="mt-1 text-sm text-card-foreground whitespace-pre-wrap">{tweet.content}</p>
                             </div>
-                            {/* Tweet Text */}
-                            <p className="mt-1 text-sm text-card-foreground whitespace-pre-wrap">{tweet.content}</p> {/* Handle line breaks */}
-                            {/* Optional: Add action buttons (reply, retweet, like) */}
                         </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            )}
         </>
     );
 }; 
