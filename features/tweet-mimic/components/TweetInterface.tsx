@@ -8,6 +8,7 @@ import { VerifiedBadge } from '@/shared/components/ui/verified-badge';
 import { Tweet, Source } from '@/entities/tweet/types';
 import { SendIcon, Loader2, LinkIcon } from "lucide-react";
 import React, { useState } from "react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/shared/components/ui/accordion";
 import trumpImage from "../assets/images/trump.jpg";
 import elonImage from "../assets/images/elon.jpg";
 import navalImage from "../assets/images/naval.jpg";
@@ -154,30 +155,36 @@ export const TweetInterface = () => {
 
             {/* Sources Section */}
             {sources && sources.length > 0 && (
-                <div className="mt-6 p-4 border border-border rounded-lg bg-card">
-                    <h3 className="text-lg font-semibold mb-3 text-card-foreground">Sources Found:</h3>
-                    <ul className="space-y-2">
-                        {sources.map((source) => (
-                            <li key={source.id || source.url} className="text-sm">
-                                <a
-                                    href={source.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center text-blue-500 hover:text-blue-700 hover:underline transition-colors"
-                                >
-                                    <LinkIcon className="w-4 h-4 mr-2 flex-shrink-0" />
-                                    <span className="truncate">{source.title || source.url}</span>
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                <Accordion type="single" collapsible className="w-full mt-6 border border-border rounded-lg bg-card">
+                    <AccordionItem value="item-1" className="border-b-0">
+                        <AccordionTrigger className="p-4 hover:no-underline">
+                            Sources Found ({sources.length})
+                        </AccordionTrigger>
+                        <AccordionContent className="p-4 pt-0">
+                            <ul className="space-y-2">
+                                {sources.map((source) => (
+                                    <li key={source.id || source.url} className="text-sm">
+                                        <a
+                                            href={source.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center text-blue-500 hover:text-blue-700 hover:underline transition-colors"
+                                        >
+                                            <LinkIcon className="w-4 h-4 mr-2 flex-shrink-0" />
+                                            <span className="truncate">{source.title || source.url}</span>
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             )}
 
             {/* Tweet List - Changed to Grid Layout */}
             {tweets.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                    {tweets.map((tweet) => (
+                    {tweets.map((tweet: Tweet) => (
                         <div
                             key={tweet.id}
                             className="flex space-x-3 p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors duration-150 bg-card"
