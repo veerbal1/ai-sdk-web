@@ -15,18 +15,6 @@ import jordanImage from "../assets/images/jordan.jpg";
 import billImage from "../assets/images/bill.jpg";
 import steveImage from "../assets/images/steve.jpg";
 
-// Interface removed from here as it's imported
-
-// Generate 10 dummy tweets (kept here for simplicity, could be passed as props)
-const dummyTweets: Tweet[] = Array.from({ length: 10 }, (_, i) => ({
-    id: i + 1,
-    name: `User ${i + 1}`,
-    handle: `user${i + 1}`,
-    avatarUrl: `https://api.dicebear.com/8.x/lorelei/svg?seed=${i + 1}`, // Using DiceBear for dummy avatars
-    content: `This is dummy tweet number ${i + 1
-        }. Just setting up the UI! #Nextjs #TailwindCSS`,
-}));
-
 const usersMetaData = {
     "Donald Trump": {
         name: "Donald Trump",
