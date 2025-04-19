@@ -6,7 +6,7 @@ import { Input } from "@/shared/components/ui/input";
 import { Separator } from "@/shared/components/ui/separator";
 import { VerifiedBadge } from '@/shared/components/ui/verified-badge';
 import { Tweet } from '@/entities/tweet/types';
-import { SendIcon } from "lucide-react";
+import { SendIcon, Loader2 } from "lucide-react";
 import React, { useState } from "react";
 import trumpImage from "../assets/images/trump.jpg";
 import elonImage from "../assets/images/elon.jpg";
@@ -50,51 +50,91 @@ const usersMetaData = {
 
 export const TweetInterface = () => {
     const [inputValue, setInputValue] = useState<string>("");
-    // Initialize state with dummy tweets
     const [tweets, setTweets] = useState<Tweet[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!inputValue.trim()) return; // Don't submit empty tweets
+        if (!inputValue.trim() || isLoading) return;
 
-        const response = await fetch("/api/tweet-mimic", {
-            method: "POST",
-            body: JSON.stringify({ prompt: inputValue }),
-        });
+        setIsLoading(true);
+        try {
+            const response = await fetch("/api/tweet-mimic", {
+                method: "POST",
+                body: JSON.stringify({ prompt: inputValue }),
+            });
 
-        const data = await response.json();
+            if (!response.ok) {
+                console.error("API request failed:", response.statusText);
+                setTweets([{
+                    id: 'error-' + Date.now(),
+                    name: 'System',
+                    handle: 'error',
+                    avatarUrl: '',
+                    content: `Failed to generate tweets. Status: ${response.status}`,
+                }, ...tweets]);
+                return;
+            }
 
-        const newState = Object.keys(data).map((key) => ({
-            id: usersMetaData[key as keyof typeof usersMetaData].name.toLowerCase().replace(/\s+/g, ''),
-            name: usersMetaData[key as keyof typeof usersMetaData].name,
-            handle: usersMetaData[key as keyof typeof usersMetaData].handle,
-            avatarUrl: usersMetaData[key as keyof typeof usersMetaData].avatarUrl,
-            content: data[key as keyof typeof data],
-        }));
+            const data = await response.json();
 
-        setTweets([...newState, ...tweets]);
-        setInputValue(""); // Clear input field
+            const newTweetsData = Object.keys(data).map((key) => {
+                const metaDataKey = key as keyof typeof usersMetaData;
+                const meta = usersMetaData[metaDataKey];
+                if (!meta) {
+                    console.warn(`Metadata not found for key: ${key}`);
+                    return null;
+                }
+                const tweet: Tweet = {
+                    id: meta.name.toLowerCase().replace(/\s+/g, '') + '-' + Date.now(),
+                    name: meta.name,
+                    handle: meta.handle,
+                    avatarUrl: meta.avatarUrl,
+                    content: data[key as keyof typeof data] as string,
+                };
+                return tweet;
+            }).filter((item): item is Tweet => item !== null);
+
+            setTweets(prevTweets => [...newTweetsData, ...prevTweets]);
+            setInputValue("");
+        } catch (error) {
+            console.error("Error during tweet generation:", error);
+            setTweets([{
+                id: 'error-' + Date.now(),
+                name: 'System',
+                handle: 'error',
+                avatarUrl: '',
+                content: `An error occurred: ${error instanceof Error ? error.message : 'Unknown error'}`,
+            }, ...tweets]);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
         <>
             {/* Input Section */}
-            <form onSubmit={handleSubmit} className="flex items-start space-x-3 p-4 border border-border rounded-lg bg-card">
+            <form onSubmit={handleSubmit} className="flex items-start space-x-3 p-4 border border-border rounded-lg bg-card w-full">
                 <Avatar className="mt-1"> {/* Align avatar slightly */}
                     <AvatarImage src="/me.jpg" alt="Veerbal's Profile Picture" />
                     <AvatarFallback>VS</AvatarFallback>
                 </Avatar>
-                <div className="flex-1 space-y-2">
+                <div className="flex-1 space-y-2 w-full">
                     <Input
                         type="text"
                         placeholder="What's happening? e.g Trade Wars etc."
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
+                        disabled={isLoading}
                     />
                     <div className="flex justify-end">
-                        <Button type="submit" disabled={!inputValue.trim()} size="sm">
-                            <SendIcon className="w-4 h-4 mr-2" />
-                            Generate
+                        <Button type="submit" disabled={!inputValue.trim() || isLoading} size="sm">
+                            {isLoading ? (
+                                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            ) : (
+                                <SendIcon className="w-4 h-4 mr-2" />
+                            )}
+                            {isLoading ? 'Generating...' : 'Generate'}
                         </Button>
                     </div>
                 </div>
