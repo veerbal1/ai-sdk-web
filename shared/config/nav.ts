@@ -53,8 +53,8 @@ export const mainNavItems: NavItem[] = [
     dateCreated: "2025-04-12",
   },
   {
-    title: "Gemini 2.5 Flash",
-    url: "/gemini-2-5-flash",
+    title: "Tweet Mimic",
+    url: "/tweet-mimic",
     icon: IconFileAi,
     dateCreated: "2025-04-19",
   },
