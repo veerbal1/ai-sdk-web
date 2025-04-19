@@ -9,6 +9,7 @@ import { Tweet, Source } from '@/entities/tweet/types';
 import { SendIcon, Loader2, LinkIcon } from "lucide-react";
 import React, { useState } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/shared/components/ui/accordion";
+import { Skeleton } from "@/shared/components/ui/skeleton";
 import trumpImage from "../assets/images/trump.jpg";
 import elonImage from "../assets/images/elon.jpg";
 import navalImage from "../assets/images/naval.jpg";
@@ -153,12 +154,24 @@ export const TweetInterface = () => {
 
             <Separator />
 
-            {/* Sources Section */}
-            {sources && sources.length > 0 && (
+            {/* Loading State: Sources Skeleton */}
+            {isLoading && (
+                <div className="mt-6 p-4 border border-border rounded-lg bg-card">
+                    <Skeleton className="h-6 w-1/3 mb-4" /> {/* Skeleton for Accordion Trigger, added margin */}
+                    <div className="space-y-2"> {/* Skeleton for Accordion Content */}
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-4 w-5/6" />
+                    </div>
+                </div>
+            )}
+
+            {/* Sources Section - Render only when not loading and sources exist */}
+            {!isLoading && sources && sources.length > 0 && (
                 <Accordion type="single" collapsible className="w-full mt-6 border border-border rounded-lg bg-card">
                     <AccordionItem value="item-1" className="border-b-0">
                         <AccordionTrigger className="p-4 hover:no-underline">
-                            Sources Found ({sources.length})
+                           Sources Found ({sources.length})
                         </AccordionTrigger>
                         <AccordionContent className="p-4 pt-0">
                             <ul className="space-y-2">
@@ -181,8 +194,24 @@ export const TweetInterface = () => {
                 </Accordion>
             )}
 
-            {/* Tweet List - Changed to Grid Layout */}
-            {tweets.length > 0 && (
+            {/* Loading State: Tweet Skeletons */}
+            {isLoading && (
+                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                    {[...Array(6)].map((_, index) => ( // Show 6 skeleton tweets
+                        <div key={index} className="flex space-x-3 p-4 border border-border rounded-lg bg-card">
+                            <Skeleton className="h-10 w-10 rounded-full" /> {/* Avatar Skeleton */}
+                            <div className="flex-1 space-y-2">
+                                <Skeleton className="h-4 w-3/4" /> {/* Name/Handle Skeleton */}
+                                <Skeleton className="h-4 w-full" /> {/* Content Line 1 Skeleton */}
+                                <Skeleton className="h-4 w-5/6" /> {/* Content Line 2 Skeleton */}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {/* Tweet List - Render only when not loading and tweets exist */}
+            {!isLoading && tweets.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                     {tweets.map((tweet: Tweet) => (
                         <div
