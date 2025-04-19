@@ -1,13 +1,5 @@
-// Removed 'use client'
-
-// Removed client-side imports like useState, SendIcon, specific ui components
 import React from "react";
-// Removed Tweet type import as it's used in client component
-// Removed VerifiedBadge import as it's used in client component
 import { TweetInterface } from "@/features/tweet-mimic/components/TweetInterface";
-
-// Removed dummyTweets generation
-// Removed local state and handleSubmit function
 
 const TweetMimicPage = () => {
 
@@ -16,12 +8,17 @@ const TweetMimicPage = () => {
     <div className="max-w-4xl mx-auto p-4 space-y-6 bg-background text-foreground w-full">
       <h1 className="text-2xl font-bold text-center mb-6">Tweet Mimic</h1>
 
+      {/* Feature Description */}
+      <p className="text-center text-muted-foreground">
+        Enter a topic, and this tool will generate tweets mimicking the distinctive styles of various public figures. 
+        Currently, it can generate tweets in the style of: Donald Trump, Elon Musk, Naval Ravikant, Garry Tan, Jordan B. Peterson, and Bill Gates. 
+        It also attempts to find relevant source links for the generated content.
+      </p>
+
       {/* Render the client component */}
       <TweetInterface />
-
-      {/* Removed Separator and Tweet list rendering - moved to TweetInterface */}
     </div>
   );
 };
 
-export default TweetMimicPage; // Renamed export for clarity
+export default TweetMimicPage;
