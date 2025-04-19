@@ -13,7 +13,7 @@ import elonImage from "../assets/images/elon.jpg";
 import navalImage from "../assets/images/naval.jpg";
 import jordanImage from "../assets/images/jordan.jpg";
 import billImage from "../assets/images/bill.jpg";
-import steveImage from "../assets/images/steve.jpg";
+import garryImage from "../assets/images/garry.jpg";
 
 const usersMetaData = {
     "Donald Trump": {
@@ -31,6 +31,11 @@ const usersMetaData = {
         handle: "NavalRavikant",
         avatarUrl: navalImage.src,
     },
+    "Garry Tan": {
+        name: "Garry Tan",
+        handle: "GarryTan",
+        avatarUrl: garryImage.src,
+    },
     "Jordan B. Peterson": {
         name: "Jordan B. Peterson",
         handle: "JordanBPeterson",
@@ -40,11 +45,6 @@ const usersMetaData = {
         name: "Bill Gates",
         handle: "BillGates",
         avatarUrl: billImage.src,
-    },
-    "Steve Jobs": {
-        name: "Steve Jobs",
-        handle: "SteveJobs",
-        avatarUrl: steveImage.src,
     }
 }
 
@@ -98,7 +98,7 @@ export const TweetInterface = () => {
                 return tweet;
             }).filter((item): item is Tweet => item !== null);
 
-            setTweets(prevTweets => [...newTweetsData, ...prevTweets]);
+            setTweets(newTweetsData);
             setInputValue("");
         } catch (error) {
             console.error("Error during tweet generation:", error);
