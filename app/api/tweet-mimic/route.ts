@@ -14,6 +14,8 @@ const dynamicSchema = z.object(
   }, {} as Record<ToneStyleKey, ZodTypeAny>)
 );
 
+export const maxDuration = 60;
+
 export async function POST(req: NextRequest) {
   const { prompt } = await req.json();
 
