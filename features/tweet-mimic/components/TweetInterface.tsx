@@ -18,27 +18,27 @@ import garryImage from "../assets/images/garry.jpg";
 const usersMetaData = {
     "Donald Trump": {
         name: "Donald Trump",
-        handle: "DonaldTrump",
+        handle: "realDonaldTrump",
         avatarUrl: trumpImage.src,
     },
     "Elon Musk": {
         name: "Elon Musk",
-        handle: "ElonMusk",
+        handle: "elonmusk",
         avatarUrl: elonImage.src,
     },
     "Naval Ravikant": {
-        name: "Naval Ravikant",
-        handle: "NavalRavikant",
+        name: "Naval",
+        handle: "naval",
         avatarUrl: navalImage.src,
     },
     "Garry Tan": {
         name: "Garry Tan",
-        handle: "GarryTan",
+        handle: "garrytan",
         avatarUrl: garryImage.src,
     },
     "Jordan B. Peterson": {
         name: "Jordan B. Peterson",
-        handle: "JordanBPeterson",
+        handle: "jordanbpeterson",
         avatarUrl: jordanImage.src,
     },
     "Bill Gates": {
