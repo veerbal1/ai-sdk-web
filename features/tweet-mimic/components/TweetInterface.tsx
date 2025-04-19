@@ -76,8 +76,11 @@ export const TweetInterface = () => {
                 return;
             }
 
-            const data = await response.json();
-
+            const responseData = await response.json();
+            const data = responseData.tweets;
+            const sources = responseData.sources;
+            console.log("data", data);
+            console.log("sources", sources);
             const newTweetsData = Object.keys(data).map((key) => {
                 const metaDataKey = key as keyof typeof usersMetaData;
                 const meta = usersMetaData[metaDataKey];
