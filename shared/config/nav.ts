@@ -1,4 +1,4 @@
-import { IconFileAi, IconMessageChatbot, type Icon } from '@tabler/icons-react'; // Import Icon type
+import { IconFileAi, IconMessageChatbot, type Icon } from "@tabler/icons-react"; // Import Icon type
 
 export interface NavItem {
   title: string;
@@ -6,47 +6,56 @@ export interface NavItem {
   icon: Icon; // Use the specific Icon type from Tabler
   disabled?: boolean;
   external?: boolean;
+  dateCreated?: string;
 }
 
 export const mainNavItems: NavItem[] = [
   {
-    title: 'Chat Caching (Dev)',
-    url: '/chat-caching-demo',
+    title: "Chat Caching (Dev)",
+    url: "/chat-caching-demo",
     icon: IconMessageChatbot,
+    dateCreated: "2025-04-12",
   },
   {
     title: "Web Search Agent",
     url: "/web-search-agent",
     icon: IconFileAi,
+    dateCreated: "2025-04-12",
   },
   {
-    title: 'Generate Text',
-    url: '/generate-text',
+    title: "Generate Text",
+    url: "/generate-text",
     icon: IconFileAi,
+    dateCreated: "2025-04-12",
   },
   {
-    title: 'Image Generation (Chat)',
-    url: '/generate-image-chat',
+    title: "Image Generation (Chat)",
+    url: "/generate-image-chat",
     icon: IconFileAi,
+    dateCreated: "2025-04-12",
   },
   {
-    title: 'Stream Object Demo',
-    url: '/stream-object-demo',
+    title: "Stream Object Demo",
+    url: "/stream-object-demo",
     icon: IconFileAi,
+    dateCreated: "2025-04-12",
   },
   {
-    title: 'LLM Tool Calling',
-    url: '/llm-tool-calling',
+    title: "LLM Tool Calling",
+    url: "/llm-tool-calling",
     icon: IconFileAi,
+    dateCreated: "2025-04-12",
   },
   {
-    title: 'Groq Chat (llama-4-scout)',
-    url: '/groq-chat',
+    title: "Groq Chat (llama-4-scout)",
+    url: "/groq-chat",
     icon: IconFileAi,
+    dateCreated: "2025-04-12",
   },
-  // {
-  //   title: 'Stream Text Multi-Step',
-  //   url: '/stream-text-multistep',
-  //   icon: IconFileAi,
-  // }
-]; 
+  {
+    title: "Gemini 2.5 Flash",
+    url: "/gemini-2-5-flash",
+    icon: IconFileAi,
+    dateCreated: "2025-04-19",
+  },
+];

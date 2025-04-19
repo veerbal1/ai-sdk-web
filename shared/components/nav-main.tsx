@@ -7,8 +7,6 @@ import {
 } from "@tabler/icons-react"
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
-import { Button } from "@/shared/components/ui/button"
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -17,6 +15,7 @@ import {
   SidebarMenuItem,
 } from "@/shared/components/ui/sidebar"
 import LoadingIndicator from "./link-loading-indicator";
+import { dateCalculator } from "../lib/utils";
 
 export function NavMain({
   items,
@@ -25,6 +24,7 @@ export function NavMain({
     title: string
     url: string
     icon?: Icon
+    dateCreated?: string
   }[]
 }) {
   const pathname = usePathname();
@@ -53,6 +53,11 @@ export function NavMain({
                         {item.icon && <item.icon />}
                         <span>{item.title}</span>
                       </span>
+                      {item.dateCreated && (
+                        <span className="text-xs text-gray-500">
+                          {dateCalculator(item.dateCreated) < 5 ? <span className="text-green-500 inline-block rounded-full px-2 py-1 text-xs bg-green-500/10">New</span> : null}
+                        </span>
+                      )}
                       <LoadingIndicator />
                     </div>
 
