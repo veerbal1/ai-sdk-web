@@ -28,7 +28,7 @@ const DeepResearch = () => {
     }, [messages]);
     return (
         <div className='w-full h-full overflow-hidden max-w-2xl mx-auto px-4'>
-            <ScrollArea className="flex-grow h-[70vh] mb-4 pr-4" ref={scrollAreaRef}>
+            <ScrollArea className="flex-grow h-[75vh] mb-4 pr-4" ref={scrollAreaRef}>
                 <div className="space-y-4">
                     {messages.length > 0
                         ? messages.map((m: Message) => (
@@ -66,14 +66,14 @@ const DeepResearch = () => {
             </ScrollArea>
             <form onSubmit={handleSubmit} className="flex items-center space-x-2 w-full">
                 <Input
-                    className="flex-grow"
+                    className="flex-1 rounded-full shadow-lg p-6 ring-0 focus-within:ring-0 focus-visible:ring-0"
                     value={input}
                     placeholder="Ask anything..."
                     onChange={handleInputChange}
                     disabled={status === 'streaming'}
                     aria-label="Chat input"
                 />
-                <Button type="submit" disabled={isDisabled || !input.trim()} size="icon" aria-label="Send message">
+                <Button className='rounded-full w-12 h-12' type="submit" disabled={isDisabled || !input.trim()} size="icon" aria-label="Send message">
                     <SendHorizonal className="h-4 w-4" />
                 </Button>
             </form>
