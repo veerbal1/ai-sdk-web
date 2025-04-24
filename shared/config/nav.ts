@@ -58,4 +58,10 @@ export const mainNavItems: NavItem[] = [
     icon: IconFileAi,
     dateCreated: "2025-04-19",
   },
+  {
+    title: "Deep Research",
+    url: "/deep-research",
+    icon: IconFileAi,
+    dateCreated: "2025-04-24",
+  },
 ];

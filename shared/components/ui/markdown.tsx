@@ -11,7 +11,7 @@ interface MarkdownProps {
 const MarkdownComponent = ({ content, className = '' }: MarkdownProps) => {
   return (
     <div 
-      className={`prose dark:prose-invert max-w-none ${className}`}
+      className={`prose prose-p:w-full prose-sm prose-pre:bg-transparent dark:prose-invert w-full overflow-hidden`}
       dangerouslySetInnerHTML={{ __html: marked(content) }}
     />
   );
