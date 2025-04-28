@@ -58,6 +58,12 @@ export const mainNavItems: NavItem[] = [
     icon: IconFileAi,
     dateCreated: "2025-04-19",
   },
+  {
+    title: "Multiple Tool Calling",
+    url: "/multiple-tool-calling",
+    icon: IconFileAi,
+    dateCreated: "2025-04-28",
+  },
   // {
   //   title: "Deep Research",
   //   url: "/deep-research",
