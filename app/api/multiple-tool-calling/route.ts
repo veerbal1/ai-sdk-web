@@ -6,7 +6,7 @@ import { z } from "zod";
 export const POST = async (req: NextRequest) => {
   const prompt = `Get the temperature in New York City and Chicago (in Fahrenheit) and add them together`;
 
-  const { text } = await generateText({
+  const stream = await streamText({
     model: google("gemini-2.0-flash-001"),
     prompt,
     tools: {
@@ -58,7 +58,5 @@ export const POST = async (req: NextRequest) => {
     maxSteps: 10,
   });
 
-  console.log(text);
-
-  return NextResponse.json({ text });
+  return stream.toDataStreamResponse();
 };
