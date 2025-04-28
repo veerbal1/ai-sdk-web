@@ -5,6 +5,7 @@ import { useChat, type Message } from '@ai-sdk/react'
 import React, { useEffect } from 'react'
 import { Loader2, Bot, User, Circle, Terminal, Send } from 'lucide-react'
 import { Input } from '@/shared/components/ui/input'
+import { Markdown } from '@/shared/components/ui/markdown'
 
 // Define a specific type for message parts, excluding undefined possibility during indexing
 type MessagePart = Exclude<Message['parts'], undefined>[number];
@@ -12,7 +13,8 @@ type MessagePart = Exclude<Message['parts'], undefined>[number];
 // Define MessagePartDisplay component for cleaner rendering
 const MessagePartDisplay = ({ part }: { part: MessagePart }) => {
     if (part.type === 'text') {
-        return <span>{part.text}</span>
+        // Use Markdown for text parts
+        return <Markdown content={part.text} />
     } else if (part.type === 'tool-invocation') {
         // Displaying the tool invocation clearly
         return (
@@ -78,7 +80,10 @@ const MultipleToolCalling = () => {
 
     return (
         <div className="flex h-full w-full max-w-2xl mx-auto flex-col items-center py-8 px-4">
-            <h1 className="text-2xl font-semibold mb-6">AI SDK - Multiple Tool Calling</h1>
+            <h1 className="text-2xl font-semibold mb-2">AI SDK - Dynamic Tool Calling</h1>
+            <p className="text-muted-foreground text-center">
+                It only have a single tool, but it dynamically creates the function for calculations and calls it with the relevent arguments.
+            </p>
 
             {/* Chat Area */}
             <div className="flex-1 w-full mb-4 overflow-y-auto rounded-lg border bg-background p-4 space-y-4">
@@ -119,13 +124,14 @@ const MultipleToolCalling = () => {
                             ) : (
                                 <div
                                     className={`rounded-lg px-3 py-2 text-sm max-w-[80%] break-words ${message.role === 'user'
-                                        ? 'bg-primary text-primary-foreground'
-                                        : 'bg-muted'
+                                        ? 'bg-primary/10 text-primary-foreground'
+                                        : 'bg-background'
                                         }`}
                                 >
                                     {/* Display message content or parts */}
                                     {message.content ? (
-                                        <span>{message.content}</span>
+                                        // Use Markdown for direct message content
+                                        <Markdown content={message.content} />
                                     ) : (
                                         message.parts && message.parts.map((part, partIndex) => (
                                             <MessagePartDisplay key={partIndex} part={part} />
@@ -143,20 +149,18 @@ const MultipleToolCalling = () => {
                     );
                 })}
                 {/* Loading indicator at the end when assistant is processing */}
-                {isLoading && (
-                    messages.length === 0 || messages[messages.length - 1].role !== 'assistant' || messages[messages.length - 1].parts.length === 0
-                ) && (
-                        <div className="flex items-center gap-3">
-                            <span className="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground shadow">
-                                <Bot className="h-5 w-5" />
-                            </span>
-                            <div className="rounded-lg px-3 py-2 text-sm bg-muted flex items-center gap-2">
-                                <Circle className="h-2 w-2 fill-current animate-bounce delay-100" />
-                                <Circle className="h-2 w-2 fill-current animate-bounce delay-200" />
-                                <Circle className="h-2 w-2 fill-current animate-bounce delay-300" />
-                            </div>
+                {status === 'submitted' && !isLoading && (
+                    <div className="flex items-center gap-3">
+                        <span className="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border bg-primary text-primary-foreground shadow">
+                            <Bot className="h-5 w-5" />
+                        </span>
+                        <div className="rounded-lg px-3 py-2 text-sm bg-muted flex items-center gap-2">
+                            <Circle className="h-2 w-2 fill-current animate-bounce delay-100" />
+                            <Circle className="h-2 w-2 fill-current animate-bounce delay-200" />
+                            <Circle className="h-2 w-2 fill-current animate-bounce delay-300" />
                         </div>
-                    )}
+                    </div>
+                )}
             </div>
 
             {/* Input Form */}

@@ -24,7 +24,7 @@ export const POST = async (req: NextRequest) => {
   const { messages } = await req.json();
 
   const stream = await streamText({
-    model: google("gemini-2.5-pro-exp-03-25"),
+    model: google("gemini-2.5-flash-preview-04-17"),
     system: `You are a helpful assistant. You have access to a special tool called 'executeDynamicFunction'.
              If the user asks for a calculation or operation for which you don't have a built-in capability or a specific tool,
              you can define a JavaScript function as a string and provide arguments as a JSON string to this tool.
