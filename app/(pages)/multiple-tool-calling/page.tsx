@@ -3,7 +3,8 @@
 import { Button } from '@/shared/components/ui/button'
 import { useChat, type Message } from '@ai-sdk/react'
 import React, { useEffect } from 'react'
-import { Loader2, Bot, User, Circle, Terminal } from 'lucide-react'
+import { Loader2, Bot, User, Circle, Terminal, Send } from 'lucide-react'
+import { Input } from '@/shared/components/ui/input'
 
 // Define a specific type for message parts, excluding undefined possibility during indexing
 type MessagePart = Exclude<Message['parts'], undefined>[number];
@@ -67,17 +68,9 @@ const tryParseJSON = (jsonString: string | null | undefined): any => {
 }
 
 const MultipleToolCalling = () => {
-    const { handleSubmit, messages, setInput, status, input } = useChat({
+    const { handleSubmit, messages, status, input, handleInputChange } = useChat({
         api: '/api/multiple-tool-calling',
     })
-
-    useEffect(() => {
-        if (!input && messages.length === 0) {
-            setInput(
-                'Get the temperature in New York City and Chicago (in Fahrenheit) and add them together'
-            )
-        }
-    }, [input, setInput, messages.length])
 
     const isLoading = status === 'streaming'
 
@@ -126,8 +119,8 @@ const MultipleToolCalling = () => {
                             ) : (
                                 <div
                                     className={`rounded-lg px-3 py-2 text-sm max-w-[80%] break-words ${message.role === 'user'
-                                            ? 'bg-primary text-primary-foreground'
-                                            : 'bg-muted'
+                                        ? 'bg-primary text-primary-foreground'
+                                        : 'bg-muted'
                                         }`}
                                 >
                                     {/* Display message content or parts */}
@@ -167,21 +160,20 @@ const MultipleToolCalling = () => {
             </div>
 
             {/* Input Form */}
-            <form onSubmit={handleSubmit} className="w-full">
+            <form onSubmit={handleSubmit} className="w-full flex gap-2 items-center">
                 {/* Keep the hidden input approach */}
-                <input
-                    type="hidden"
+                <Input
                     value={input}
-                    onChange={(e) => setInput(e.target.value)}
+                    className="w-full"
+                    onChange={handleInputChange}
                 />
-                <Button type="submit" disabled={isLoading || !input} className="w-full">
+                <Button type="submit" disabled={isLoading || !input} size="icon">
                     {isLoading ? (
                         <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Processing...
                         </>
                     ) : (
-                        'Get Weather & Sum'
+                        <Send className="h-4 w-4" />
                     )}
                 </Button>
             </form>
