@@ -71,7 +71,7 @@ const tryParseJSON = (jsonString: string | null | undefined): any => {
 
 const MultipleToolCalling = () => {
     const { handleSubmit, messages, status, input, handleInputChange } = useChat({
-        api: '/api/multiple-tool-calling',
+        api: '/api/dynamic-tool-calling',
     })
 
     const isLoading = status === 'streaming'
@@ -89,7 +89,7 @@ const MultipleToolCalling = () => {
             <div className="flex-1 w-full mb-4 overflow-y-auto rounded-lg border bg-background p-4 space-y-4">
                 {messages.length === 0 && !isLoading && (
                     <p className="text-muted-foreground text-center">
-                        Click the button to start the chat.
+                        Test it out by asking anything calculation related.
                     </p>
                 )}
                 {messages.map((message, index) => {
@@ -170,6 +170,7 @@ const MultipleToolCalling = () => {
                     value={input}
                     className="w-full"
                     onChange={handleInputChange}
+                    placeholder='Ask anything calculation related...'
                 />
                 <Button type="submit" disabled={isLoading || !input} size="icon">
                     {isLoading ? (

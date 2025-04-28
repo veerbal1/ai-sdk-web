@@ -59,8 +59,8 @@ export const mainNavItems: NavItem[] = [
     dateCreated: "2025-04-19",
   },
   {
-    title: "Multiple Tool Calling",
-    url: "/multiple-tool-calling",
+    title: "Dynamic Tool Calling",
+    url: "/dynamic-tool-calling",
     icon: IconFileAi,
     dateCreated: "2025-04-28",
   },
