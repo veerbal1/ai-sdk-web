@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^1.2.12",
     "@ai-sdk/google": "^1.2.12",
     "@ai-sdk/groq": "^1.2.5",
     "@ai-sdk/openai": "^1.3.22",
@@ -50,6 +51,7 @@
     "recharts": "^2.15.2",
     "server-only": "^0.0.1",
     "sonner": "^2.0.3",
+    "swr": "^2.3.3",
     "tailwind-merge": "^3.1.0",
     "tw-animate-css": "^1.2.5",
     "vaul": "^1.1.2",
