@@ -64,6 +64,12 @@ export const mainNavItems: NavItem[] = [
     icon: IconFileAi,
     dateCreated: "2025-04-28",
   },
+  {
+    title: "Claude 4 Sonnet",
+    url: "/claude-4-sonnet",
+    icon: IconFileAi,
+    dateCreated: "2025-05-23",
+  },
   // {
   //   title: "Deep Research",
   //   url: "/deep-research",
