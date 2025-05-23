@@ -12,8 +12,8 @@ export async function POST(req: Request) {
     // Wrap the OpenAI model with the cached middleware
     const model =
       process.env.NODE_ENV === "development"
-        ? cached(openai("gpt-4o-mini"))
-        : openai("gpt-4o-mini");
+        ? cached(openai("gpt-4.1-mini"))
+        : openai("gpt-4.1-mini");
 
     const result = await streamText({
       model: model, // Use the cached model in dev otherwise prod model
