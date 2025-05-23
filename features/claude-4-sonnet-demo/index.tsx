@@ -58,7 +58,7 @@ const Claude4SonnetDemo = () => {
   // Cast messages to our enhanced type
   const messages = rawMessages as ChatUIMessage[];
 
-  const isLoading = status === "submitted" || status === "streaming";
+  const isLoading = status === "submitted";
 
   const scrollAreaRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
@@ -175,7 +175,7 @@ const Claude4SonnetDemo = () => {
   );
 
   return (
-    <Card className="w-full max-w-4xl mx-auto flex flex-col h-[85vh] shadow-lg">
+    <Card className="w-full max-w-4xl mx-auto flex flex-col h-[84vh] shadow-lg">
       <CardHeader className="border-b">
         <div className="flex items-center gap-3">
           <Avatar className="h-10 w-10">
@@ -197,7 +197,7 @@ const Claude4SonnetDemo = () => {
         </div>
       </CardHeader>
 
-      <CardContent className="flex-grow flex flex-col overflow-hidden p-6">
+      <CardContent className="flex-grow flex flex-col overflow-hidden py-0">
         <ScrollArea className="flex-grow h-full pr-4" ref={scrollAreaRef}>
           <div className="space-y-6">
             {messages.length > 0 ? (
@@ -288,7 +288,7 @@ const Claude4SonnetDemo = () => {
         </ScrollArea>
       </CardContent>
 
-      <CardFooter className="border-t p-6 w-full">
+      <CardFooter className="border-t p-6 !pt-0 !pb-0 w-full">
         <form
           onSubmit={handleSubmit}
           className="flex gap-3 w-full flex-col"
