@@ -20,7 +20,7 @@ export const POST = async (req: Request) => {
   console.log("Chemistry Chat Messages", messages);
 
   const response = await streamText({
-    model: anthropic("claude-sonnet-4-20250514"),
+    model: anthropic("claude-3-7-sonnet-20250219"),
     system: `You are a chemistry expert AI assistant specializing in molecular structures, chemical reactions, and chemistry education. Your expertise includes:
 
 - Molecular structure analysis and diagrams
