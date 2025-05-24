@@ -14,8 +14,6 @@ const s3Client = new S3Client({
   },
 });
 
-const S3_BUCKET_NAME = process.env.X_AWS_BUCKET_NAME!;
-
 export const POST = async (req: Request) => {
   const { messages } = await req.json();
 
