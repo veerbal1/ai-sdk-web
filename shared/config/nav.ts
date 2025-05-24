@@ -76,4 +76,10 @@ export const mainNavItems: NavItem[] = [
     icon: IconFileAi,
     dateCreated: "2025-05-24",
   },
+  {
+    title: "Chemistry Molecule Diagram",
+    url: "/chemistry-molecule-diagram",
+    icon: IconFileAi,
+    dateCreated: "2025-05-24",
+  },
 ];
