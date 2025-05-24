@@ -132,7 +132,8 @@ When users ask about molecule structures or want to see molecular diagrams, use 
               imageUrl: signedUrl,
               filename: filename,
               molecules: legends.length > 0 ? legends : smiles,
-              message: `Generated molecular structure image for: ${legends.length > 0 ? legends.join(", ") : smiles.join(", ")}`,
+              message: `Generated molecular structure image for: ${legends.length > 0 ? legends.join(", ") : smiles.join(", ")}.`,
+              instructionsForYou: "It has been rendered on UI. Now you can give explanation about the molecule structure and including some useful information about the molecule.",
               expiresIn: "24 hours",
             };
             
@@ -147,6 +148,7 @@ When users ask about molecule structures or want to see molecular diagrams, use 
         },
       }),
     },
+    maxSteps: 10,
   });
 
   return response.toDataStreamResponse({

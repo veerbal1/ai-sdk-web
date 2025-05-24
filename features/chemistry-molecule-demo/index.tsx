@@ -23,6 +23,7 @@ import {
   Brain,
   Atom,
   FlaskConical,
+  Loader,
 } from "lucide-react";
 import { Markdown } from "@/shared/components/ui/markdown";
 import { cn } from "@/shared/lib/utils";
@@ -120,47 +121,58 @@ const ChemistryMoleculeDemo = () => {
                       </Badge>
                     )}
                   </div>
-                  
-                                                       
+
                   {/* Show generated image */}
-                  {part.toolInvocation.state === "result" && 
-                   part.toolInvocation.result?.success && 
-                   part.toolInvocation.result?.imageUrl && (
-                    <div className="space-y-2">
-                      <div className="relative rounded-lg overflow-hidden border border-green-200 dark:border-green-800">
-                        <img 
-                          src={part.toolInvocation.result.imageUrl}
-                          alt={`Molecular structure: ${part.toolInvocation.result.molecules?.join(", ") || "Unknown"}`}
-                          className="w-full h-auto max-w-md mx-auto block"
-                          onError={(e) => {
-                            console.error("Failed to load molecule image:", e);
-                            (e.target as HTMLImageElement).style.display = 'none';
-                          }}
-                        />
+                  {part.toolInvocation.state === "result" &&
+                    part.toolInvocation.result?.success &&
+                    part.toolInvocation.result?.imageUrl && (
+                      <div className="space-y-2">
+                        <div className="relative rounded-lg overflow-hidden border border-green-200 dark:border-green-800">
+                          <img
+                            src={part.toolInvocation.result.imageUrl}
+                            alt={`Molecular structure: ${
+                              part.toolInvocation.result.molecules?.join(
+                                ", "
+                              ) || "Unknown"
+                            }`}
+                            className="w-full h-auto max-w-md mx-auto block"
+                            onError={(e) => {
+                              console.error(
+                                "Failed to load molecule image:",
+                                e
+                              );
+                              (e.target as HTMLImageElement).style.display =
+                                "none";
+                            }}
+                          />
+                        </div>
+                        <div className="text-xs text-muted-foreground text-center">
+                          {part.toolInvocation.result.message}
+                          {part.toolInvocation.result.expiresIn && (
+                            <span>
+                              {" "}
+                              • Expires in{" "}
+                              {part.toolInvocation.result.expiresIn}
+                            </span>
+                          )}
+                        </div>
                       </div>
-                      <div className="text-xs text-muted-foreground text-center">
-                        {part.toolInvocation.result.message}
-                        {part.toolInvocation.result.expiresIn && (
-                          <span> • Expires in {part.toolInvocation.result.expiresIn}</span>
+                    )}
+
+                  {/* Show error if tool failed */}
+                  {part.toolInvocation.state === "result" &&
+                    !part.toolInvocation.result?.success && (
+                      <div className="bg-red-50 border border-red-200 rounded-md p-3 dark:bg-red-950 dark:border-red-800">
+                        <div className="text-red-800 dark:text-red-200 text-sm">
+                          ❌ Failed to generate molecular structure
+                        </div>
+                        {part.toolInvocation.result?.error && (
+                          <div className="text-red-600 dark:text-red-400 text-xs mt-1">
+                            {part.toolInvocation.result.error}
+                          </div>
                         )}
                       </div>
-                    </div>
-                  )}
-                  
-                  {/* Show error if tool failed */}
-                  {part.toolInvocation.state === "result" && 
-                   !part.toolInvocation.result?.success && (
-                    <div className="bg-red-50 border border-red-200 rounded-md p-3 dark:bg-red-950 dark:border-red-800">
-                      <div className="text-red-800 dark:text-red-200 text-sm">
-                        ❌ Failed to generate molecular structure
-                      </div>
-                      {part.toolInvocation.result?.error && (
-                        <div className="text-red-600 dark:text-red-400 text-xs mt-1">
-                          {part.toolInvocation.result.error}
-                        </div>
-                      )}
-                    </div>
-                  )}
+                    )}
                 </div>
               )}
             </div>
@@ -398,12 +410,16 @@ const ChemistryMoleculeDemo = () => {
             />
             <Button
               type="submit"
-              disabled={isLoading || !input.trim()}
+              disabled={isLoading || !input.trim() || status === "streaming"}
               size="icon"
               className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-green-600 hover:bg-green-700"
               aria-label="Send message"
             >
-              <SendHorizontal className="h-4 w-4" />
+              {isLoading || status === "streaming" ? (
+                <Loader className="h-4 w-4 animate-spin" />
+              ) : (
+                <SendHorizontal className="h-4 w-4" />
+              )}
             </Button>
           </div>
         </form>
