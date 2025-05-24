@@ -76,7 +76,7 @@ When users ask about molecule structures or want to see molecular diagrams, use 
             
             // Call the FastAPI endpoint to generate the molecule image
             const response = await fetch(
-              `http://localhost:8000/generate-molecules-image`,
+              `https://rdkit-fastapi.onrender.com/generate-molecules-image`,
               {
                 method: "POST",
                 headers: {
