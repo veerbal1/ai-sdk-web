@@ -16,7 +16,14 @@ import { Avatar, AvatarFallback } from "@/shared/components/ui/avatar";
 import { Badge } from "@/shared/components/ui/badge";
 import { Skeleton } from "@/shared/components/ui/skeleton";
 import { Separator } from "@/shared/components/ui/separator";
-import { SendHorizontal, Bot, User, Brain, Atom, FlaskConical } from "lucide-react";
+import {
+  SendHorizontal,
+  Bot,
+  User,
+  Brain,
+  Atom,
+  FlaskConical,
+} from "lucide-react";
 import { Markdown } from "@/shared/components/ui/markdown";
 import { cn } from "@/shared/lib/utils";
 
@@ -100,6 +107,13 @@ const ChemistryMoleculeDemo = () => {
                     </pre>
                   </div>
                 </details>
+              )}
+              {part.type === "tool-invocation" && (
+                <div>
+                  <pre className="text-xs whitespace-pre-wrap break-words text-muted-foreground">
+                    {JSON.stringify(part.toolInvocation, null, 2)}
+                  </pre>
+                </div>
               )}
             </div>
           ))}
@@ -186,7 +200,8 @@ const ChemistryMoleculeDemo = () => {
           <div>
             <CardTitle className="text-xl">Chemistry Assistant</CardTitle>
             <p className="text-sm text-muted-foreground">
-              AI-powered chemistry tutor specializing in molecular structures and diagrams
+              AI-powered chemistry tutor specializing in molecular structures
+              and diagrams
             </p>
           </div>
           {isLoading && (
@@ -238,13 +253,17 @@ const ChemistryMoleculeDemo = () => {
                           <span
                             className={cn("font-semibold text-sm", {
                               "text-white": m.role === "user",
-                              "text-green-800 dark:text-green-200": m.role === "assistant",
+                              "text-green-800 dark:text-green-200":
+                                m.role === "assistant",
                             })}
                           >
                             {m.role === "user" ? "You" : "Chemistry AI"}
                           </span>
                           {m.role === "assistant" && (
-                            <Badge variant="outline" className="text-xs border-green-300 text-green-700 dark:border-green-600 dark:text-green-300">
+                            <Badge
+                              variant="outline"
+                              className="text-xs border-green-300 text-green-700 dark:border-green-600 dark:text-green-300"
+                            >
                               Chemistry Expert
                             </Badge>
                           )}
@@ -253,7 +272,8 @@ const ChemistryMoleculeDemo = () => {
                         <div
                           className={cn("prose-content", {
                             "text-white [&_*]:text-white/80": m.role === "user",
-                            "text-green-900 dark:text-green-100": m.role === "assistant",
+                            "text-green-900 dark:text-green-100":
+                              m.role === "assistant",
                           })}
                         >
                           {renderMessageParts(m)}
@@ -283,14 +303,23 @@ const ChemistryMoleculeDemo = () => {
                   Welcome to Chemistry Assistant
                 </h3>
                 <p className="text-muted-foreground max-w-md">
-                  Ask me about molecular structures, chemical reactions, organic chemistry, 
-                  or any chemistry concepts. I can help explain complex molecules and their diagrams!
+                  Ask me about molecular structures, chemical reactions, organic
+                  chemistry, or any chemistry concepts. I can help explain
+                  complex molecules and their diagrams!
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2 justify-center">
-                  <Badge variant="outline" className="text-xs">Molecular Diagrams</Badge>
-                  <Badge variant="outline" className="text-xs">Chemical Reactions</Badge>
-                  <Badge variant="outline" className="text-xs">Organic Chemistry</Badge>
-                  <Badge variant="outline" className="text-xs">IUPAC Naming</Badge>
+                  <Badge variant="outline" className="text-xs">
+                    Molecular Diagrams
+                  </Badge>
+                  <Badge variant="outline" className="text-xs">
+                    Chemical Reactions
+                  </Badge>
+                  <Badge variant="outline" className="text-xs">
+                    Organic Chemistry
+                  </Badge>
+                  <Badge variant="outline" className="text-xs">
+                    IUPAC Naming
+                  </Badge>
                 </div>
               </div>
             )}
@@ -299,12 +328,12 @@ const ChemistryMoleculeDemo = () => {
       </CardContent>
 
       <CardFooter className="border-t p-6 !pt-0 !pb-0 w-full">
-        <form
-          onSubmit={handleSubmit}
-          className="flex gap-3 w-full flex-col"
-        >
+        <form onSubmit={handleSubmit} className="flex gap-3 w-full flex-col">
           <div className="flex items-center gap-2 mt-3 text-xs text-muted-foreground">
-            <Badge variant="outline" className="text-xs border-green-300 text-green-700 dark:border-green-600 dark:text-green-300">
+            <Badge
+              variant="outline"
+              className="text-xs border-green-300 text-green-700 dark:border-green-600 dark:text-green-300"
+            >
               Chemistry AI
             </Badge>
             <span>•</span>
@@ -335,4 +364,4 @@ const ChemistryMoleculeDemo = () => {
   );
 };
 
-export default ChemistryMoleculeDemo; 
+export default ChemistryMoleculeDemo;
