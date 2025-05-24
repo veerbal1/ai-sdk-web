@@ -294,7 +294,7 @@ const ChemistryMoleculeDemo = () => {
                           "flex-1 max-w-[85%] rounded-xl p-4 shadow-sm transition-all group-hover:shadow-md",
                           m.role === "user"
                             ? "bg-primary text-primary-foreground"
-                            : "bg-green-50 border border-green-200 dark:bg-green-950 dark:border-green-800"
+                            : "bg-white border border-green-200"
                         )}
                       >
                         <div className="flex items-center gap-2 mb-2">
