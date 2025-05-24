@@ -51,7 +51,7 @@ export function NavMain({
                     <div className="flex items-center gap-2 justify-between">
                       <span className="flex items-center gap-2">
                         {item.icon && <item.icon />}
-                        <span>{item.title}</span>
+                        <span className="text-sm truncate max-w-[17ch]">{item.title}</span>
                       </span>
                       {item.dateCreated && (
                         <span className="text-xs text-gray-500">
