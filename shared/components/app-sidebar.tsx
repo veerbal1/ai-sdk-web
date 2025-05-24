@@ -36,7 +36,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent className="flex-grow overflow-y-auto">
-        <NavMain items={mainNavItems.sort((a, b) => a.title.localeCompare(b.title))} />
+        <NavMain items={mainNavItems.sort((a, b) => new Date(b.dateCreated || '').getTime() - new Date(a.dateCreated || '').getTime())} />
       </SidebarContent>
       <div className="mt-auto p-4 border-t border-border">
         <div className="flex items-center space-x-3">

@@ -70,10 +70,10 @@ export const mainNavItems: NavItem[] = [
     icon: IconFileAi,
     dateCreated: "2025-05-23",
   },
-  // {
-  //   title: "Deep Research",
-  //   url: "/deep-research",
-  //   icon: IconFileAi,
-  //   dateCreated: "2025-04-24",
-  // },
+  {
+    title: "Reasoning Animation",
+    url: "/reasoning-animation",
+    icon: IconFileAi,
+    dateCreated: "2025-05-24",
+  },
 ];
