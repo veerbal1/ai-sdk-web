@@ -6,6 +6,7 @@ import { Markdown } from "@/shared/components/ui/markdown";
 import { useChat } from "@ai-sdk/react";
 import { IconLoader, IconSend } from "@tabler/icons-react";
 import { Loader } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 
 const ChatSmoothAnimationInterface = () => {
   const { messages, input, handleInputChange, handleSubmit, status } = useChat({
@@ -47,18 +48,29 @@ const ChatSmoothAnimationInterface = () => {
               )}
             </div>
           ))}
-          {isSubmitted && (
-            <div className="flex justify-start w-fit">
-              <div className="max-w-[80%]">
-                <div className="text-xs text-muted-foreground mb-1">
-                  Assistant
+          <AnimatePresence>
+            {isSubmitted && (
+              <motion.div
+                className="flex justify-start w-fit"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ 
+                  duration: 0.3, 
+                  ease: "easeOut" 
+                }}
+              >
+                <div className="max-w-[80%]">
+                  <div className="text-xs text-muted-foreground mb-1">
+                    Assistant
+                  </div>
+                  <div className="bg-muted p-2 rounded-lg text-sm flex items-center gap-2 justify-center">
+                    <Loader className="h-4 w-4 animate-spin" />
+                  </div>
                 </div>
-                <div className="bg-muted p-2 rounded-lg text-sm flex items-center gap-2 justify-center">
-                  <Loader className="h-4 w-4 animate-spin" />
-                </div>
-              </div>
-            </div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
