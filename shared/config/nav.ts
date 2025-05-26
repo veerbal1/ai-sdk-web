@@ -82,4 +82,10 @@ export const mainNavItems: NavItem[] = [
     icon: IconFileAi,
     dateCreated: "2025-05-24",
   },
+  {
+    title: "Chat Smooth Animation",
+    url: "/chat-smooth-animation",
+    icon: IconFileAi,
+    dateCreated: "2025-05-26",
+  },
 ];
